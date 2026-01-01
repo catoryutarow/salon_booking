@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>よりみちSALON 美と癒しのマルシェ | 2026/2/20</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: #fafafa;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f5e6f0 0%, #e8f5f0 100%);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid #d4a5c8;
+        }
+
+        .hero h1 {
+            font-size: 1.75rem;
+            color: #6b4d5e;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .hero .catch {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .hero .event-info {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 0 auto;
+            max-width: 500px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .hero .event-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .hero .event-info strong {
+            color: #6b4d5e;
+        }
+
+        /* Section */
+        section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        section h2 {
+            font-size: 1.5rem;
+            color: #6b4d5e;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #d4a5c8;
+        }
+
+        /* Menu Cards */
+        .menu-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border: 2px solid #f0e6ed;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .menu-card h3 {
+            font-size: 1.25rem;
+            color: #6b4d5e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .menu-card h3::before {
+            content: "✨";
+            font-size: 1.1rem;
+        }
+
+        .menu-card .staff {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item {
+            margin: 0.75rem 0;
+            padding: 0.75rem;
+            background: #fafafa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .menu-item strong {
+            color: #6b4d5e;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Button */
+        .btn-reserve {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1.25rem;
+            background: linear-gradient(135deg, #d4a5c8 0%, #a8c5d1 100%);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 3px 10px rgba(212, 165, 200, 0.3);
+        }
+
+        .btn-reserve:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-reserve::after {
+            content: " →";
+            margin-left: 0.5rem;
+        }
+
+        /* Quick Reserve Section */
+        .quick-reserve {
+            background: linear-gradient(135deg, #fff5f8 0%, #f0f9ff 100%);
+            padding: 2rem 1.5rem;
+            border-top: 3px solid #d4a5c8;
+            border-bottom: 3px solid #d4a5c8;
+        }
+
+        .quick-reserve h2 {
+            text-align: center;
+            border: none;
+            margin-bottom: 1rem;
+        }
+
+        .quick-reserve-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quick-btn {
+            background: white;
+            padding: 1rem 0.5rem;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #6b4d5e;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            border: 2px solid #d4a5c8;
+        }
+
+        .quick-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Access */
+        .access-info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .access-info p {
+            margin: 0.75rem 0;
+        }
+
+        .map-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: #4285f4;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .map-link:hover {
+            opacity: 0.9;
+        }
+
+        /* FAQ */
+        .faq-list {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #f0e6ed;
+            padding: 1.25rem;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item dt {
+            font-weight: bold;
+            color: #6b4d5e;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .faq-item dt::before {
+            content: "Q. ";
+            color: #d4a5c8;
+        }
+
+        .faq-item dd {
+            color: #555;
+            font-size: 0.95rem;
+            margin-left: 0;
+        }
+
+        .faq-item dd::before {
+            content: "A. ";
+            color: #d4a5c8;
+            font-weight: bold;
+        }
+
+        /* Important Notice */
+        .important-notice {
+            background: #fff9e6;
+            border: 2px solid #ffd966;
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin: 2rem 0;
+        }
+
+        .important-notice h3 {
+            color: #b8860b;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .important-notice ul {
+            margin-left: 1.25rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .important-notice li {
+            margin: 0.5rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #6b4d5e;
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        footer h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        footer .contact {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .quick-reserve-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>よりみちSALON<br>美と癒しのマルシェ</h1>
+        <p class="catch">マッサージ、ヘッドスパ、耳つぼジュエリー…<br>気になるエステをまとめて体験！</p>
+        <div class="event-info">
+            <p><strong>📅 日時</strong><br>2026年2月20日（金）<br>10:30 開場 〜 16:30 終了</p>
+            <p><strong>📍 場所</strong><br>北本市栄市民活動交流センター<br>埼玉県北本市栄1-1</p>
+        </div>
+    </div>
+
+    <!-- Quick Reserve Buttons -->
+    <div class="quick-reserve">
+        <h2>🎯 予約する（施術者を選択）</h2>
+        <div class="quick-reserve-grid">
+            <a href="{{BOOKING_URL_HEAD}}" target="_blank" rel="noopener noreferrer" class="quick-btn">ドライヘッド<br>平尾和子</a>
+            <a href="{{BOOKING_URL_NAIL}}" target="_blank" rel="noopener noreferrer" class="quick-btn">ネイル<br>星野美香</a>
+            <a href="{{BOOKING_URL_PALM}}" target="_blank" rel="noopener noreferrer" class="quick-btn">手相<br>松岡佐智代</a>
+            <a href="{{BOOKING_URL_ESTE}}" target="_blank" rel="noopener noreferrer" class="quick-btn">エステ<br>三浦智子</a>
+            <a href="{{BOOKING_URL_EAR}}" target="_blank" rel="noopener noreferrer" class="quick-btn">耳つぼ<br>平尾夏純</a>
+        </div>
+    </div>
+
+    <!-- Menu Section -->
+    <section id="menu">
+        <h2>💆 メニュー一覧</h2>
+
+        <div class="menu-grid">
+            <!-- ドライヘッド -->
+            <div class="menu-card">
+                <h3>ドライヘッド</h3>
+                <p class="staff">施術者：平尾和子</p>
+
+                <div class="menu-item">
+                    <strong>ドライヘッドスパ</strong><br>
+                    10分 500円<br>
+                    <span class="note">※延長10分ごと +500円（当日空き状況次第）</span>
+                </div>
+
+                <div class="menu-item">
+                    <strong>脇ほぐし</strong><br>
+                    5分 500円
+                </div>
+
+                <div class="menu-item">
+                    <strong>足裏ふくらはぎ</strong><br>
+                    15分 1,500円（ホットストーン付き）
+                </div>
+
+                <a href="{{BOOKING_URL_HEAD}}" target="_blank" rel="noopener noreferrer" class="btn-reserve">ドライヘッドを予約</a>
+            </div>
+
+            <!-- ネイル -->
+            <div class="menu-card">
+                <h3>ネイル</h3>
+                <p class="staff">施術者：星野美香</p>
+
+                <div class="menu-item">
+                    <strong>ハンドマッサージ</strong><br>
+                    10分 500円
+                </div>
+
+                <div class="menu-item">
+                    <strong>グラデーションジェルネイル</strong><br>
+                    30分 2,000円
+                </div>
+
+                <a href="{{BOOKING_URL_NAIL}}" target="_blank" rel="noopener noreferrer" class="btn-reserve">ネイルを予約</a>
+            </div>
+
+            <!-- 手相 -->
+            <div class="menu-card">
+                <h3>手相</h3>
+                <p class="staff">施術者：松岡佐智代</p>
+
+                <div class="menu-item">
+                    <strong>手相鑑定</strong><br>
+                    15分 500円
+                </div>
+
+                <a href="{{BOOKING_URL_PALM}}" target="_blank" rel="noopener noreferrer" class="btn-reserve">手相を予約</a>
+            </div>
+
+            <!-- エステ -->
+            <div class="menu-card">
+                <h3>エステ</h3>
+                <p class="staff">施術者：三浦智子</p>
+
+                <div class="menu-item">
+                    <strong>血流促進電位治療器</strong><br>
+                    30分 500円
+                </div>
+
+                <a href="{{BOOKING_URL_ESTE}}" target="_blank" rel="noopener noreferrer" class="btn-reserve">エステを予約</a>
+            </div>
+
+            <!-- 耳つぼジュエリー -->
+            <div class="menu-card">
+                <h3>耳つぼジュエリー</h3>
+                <p class="staff">施術者：平尾夏純</p>
+
+                <div class="menu-item">
+                    <strong>耳つぼジュエリー</strong><br>
+                    15分<br>
+                    2個 500円、+2個ごとに +500円<br>
+                    <span class="note">※追加は当日空き状況次第</span>
+                </div>
+
+                <a href="{{BOOKING_URL_EAR}}" target="_blank" rel="noopener noreferrer" class="btn-reserve">耳つぼを予約</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Access Section -->
+    <section id="access">
+        <h2>🗺️ アクセス</h2>
+        <div class="access-info">
+            <p><strong>会場名</strong><br>北本市栄市民活動交流センター</p>
+            <p><strong>住所</strong><br>〒364-0027<br>埼玉県北本市栄1-1</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=埼玉県北本市栄1-1+北本市栄市民活動交流センター" target="_blank" rel="noopener noreferrer" class="map-link">📍 Googleマップで見る</a>
+        </div>
+    </section>
+
+    <!-- Important Notice & FAQ -->
+    <section id="faq">
+        <h2>⚠️ ご予約前に必ずご確認ください</h2>
+
+        <div class="important-notice">
+            <h3>🔔 予約に関する重要事項</h3>
+            <ul>
+                <li>予約枠は施術時間に加え、余裕時間（5〜10分）を含んでいます</li>
+                <li>延長・追加メニューは予約時に受付できません。当日の空き状況次第でご案内します</li>
+                <li>最終予約枠は16:30閉場のため、通常より早めに締め切る場合があります</li>
+                <li>予約が埋まっている場合でも、当日会場で受付できる場合があります</li>
+            </ul>
+        </div>
+
+        <dl class="faq-list">
+            <div class="faq-item">
+                <dt>遅刻した場合はどうなりますか？</dt>
+                <dd>次の予約枠に影響が出るため、施術時間が短くなる可能性があります。返金対応はできませんので、お時間に余裕をもってお越しください。</dd>
+            </div>
+
+            <div class="faq-item">
+                <dt>延長や追加メニューは予約できますか？</dt>
+                <dd>事前予約では基本メニューのみ受付しています。延長・追加は当日の空き状況に応じてスタッフが対応いたしますので、会場でお声がけください。</dd>
+            </div>
+
+            <div class="faq-item">
+                <dt>キャンセルしたい場合は？</dt>
+                <dd>Googleカレンダー予約ページからキャンセル操作が可能です。できるだけ早めのご連絡をお願いいたします。</dd>
+            </div>
+
+            <div class="faq-item">
+                <dt>予約枠が全て埋まっている場合は？</dt>
+                <dd>当日会場にて空き状況を確認できる場合があります。また、直前にキャンセルが出ることもございますので、諦めずにお問い合わせください。</dd>
+            </div>
+
+            <div class="faq-item">
+                <dt>複数のメニューを受けたいのですが？</dt>
+                <dd>それぞれの施術者ごとに予約が必要です。上記の予約ボタンから各施術者の予約ページにアクセスし、お好きな時間帯をお選びください。</dd>
+            </div>
+        </dl>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h3>お問い合わせ</h3>
+        <p>ご不明な点がございましたら<br>お気軽にお問い合わせください</p>
+        <div class="contact">
+            連絡先：{{CONTACT}}
+        </div>
+        <p style="margin-top: 2rem; font-size: 0.85rem; opacity: 0.8;">
+            © 2026 よりみちSALON 美と癒しのマルシェ
+        </p>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links (if needed in future)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Track outbound link clicks (optional analytics placeholder)
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            link.addEventListener('click', function() {
+                console.log('Booking link clicked:', this.href);
+                // Add analytics tracking here if needed
+            });
+        });
+    </script>
+</body>
+</html>
