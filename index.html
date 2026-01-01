@@ -507,16 +507,22 @@
             const closeBtn = modal.querySelector('.close');
 
             closeBtn.onclick = () => {
-                modal.style.display = 'none';
-                resetBookingState();
+                closeModalWithoutReload();
             };
 
             window.onclick = (event) => {
                 if (event.target === modal) {
-                    modal.style.display = 'none';
-                    resetBookingState();
+                    closeModalWithoutReload();
                 }
             };
+        }
+
+        // モーダルを閉じる（リロードなし）
+        function closeModalWithoutReload() {
+            document.getElementById('bookingModal').style.display = 'none';
+            resetBookingState();
+            // 注意: 次回モーダルを開く時に最新データを取得するので、
+            // ここではリロードしない（UX改善）
         }
 
         // ============================================
@@ -531,8 +537,9 @@
             content.innerHTML = '<div class="loading"><div class="spinner"></div><p>空き状況を読み込み中...</p></div>';
 
             try {
-                // 空き枠取得
-                const response = await fetch(`${API_BASE_URL}/api/availability?staff=${staff.id}&date=2026-02-20`);
+                // 空き枠取得（キャッシュ防止のためタイムスタンプ追加）
+                const timestamp = new Date().getTime();
+                const response = await fetch(`${API_BASE_URL}/api/availability?staff=${staff.id}&date=2026-02-20&_t=${timestamp}`);
 
                 if (!response.ok) {
                     throw new Error('空き状況の取得に失敗しました');
@@ -742,7 +749,11 @@
                         ・キャンセルはお早めにご連絡ください
                     </div>
 
-                    <button class="btn-submit" onclick="closeModal()" style="margin-top: 1.5rem;">
+                    <p style="margin-top: 1rem; font-size: 0.85rem; color: #666; text-align: center;">
+                        予約内容はGoogleカレンダーに登録されました
+                    </p>
+
+                    <button class="btn-submit" onclick="closeModal()" style="margin-top: 1rem;">
                         閉じる
                     </button>
                 </div>
