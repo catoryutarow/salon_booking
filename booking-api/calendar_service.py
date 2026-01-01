@@ -7,6 +7,7 @@ import os
 from datetime import datetime, timedelta
 from typing import List, Dict, Tuple, Optional
 import logging
+import pytz
 
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
@@ -52,9 +53,6 @@ class CalendarService:
         """
         try:
             # 時刻範囲を作成（タイムゾーン付き）
-            from datetime import timezone as tz_module
-            import pytz
-
             tz = pytz.timezone(timezone)
             time_min = tz.localize(datetime.combine(
                 date.date(),
