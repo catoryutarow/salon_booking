@@ -117,15 +117,16 @@ class CalendarService:
         Returns:
             空き枠の開始時刻リスト
         """
-        # 全枠を生成
-        time_min = datetime.combine(
+        # 全枠を生成（タイムゾーン付き）
+        tz = pytz.timezone(timezone)
+        time_min = tz.localize(datetime.combine(
             date.date(),
             datetime.strptime(start_time, "%H:%M").time()
-        )
-        time_max = datetime.combine(
+        ))
+        time_max = tz.localize(datetime.combine(
             date.date(),
             datetime.strptime(end_time, "%H:%M").time()
-        )
+        ))
 
         all_slots = []
         current = time_min
@@ -133,13 +134,13 @@ class CalendarService:
             all_slots.append(current)
             current += timedelta(minutes=slot_duration)
 
-        # 回復枠を除外
+        # 回復枠を除外（タイムゾーン付き）
         recovery_slots = []
         for recovery_time in recovery_times:
-            recovery_dt = datetime.combine(
+            recovery_dt = tz.localize(datetime.combine(
                 date.date(),
                 datetime.strptime(recovery_time, "%H:%M").time()
-            )
+            ))
             recovery_slots.append(recovery_dt)
 
         # busy枠と回復枠を除外
