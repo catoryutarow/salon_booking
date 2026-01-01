@@ -8,6 +8,7 @@ import yaml
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
+import pytz
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -347,9 +348,14 @@ def create_booking():
         if not menu:
             return jsonify({"error": f"Menu not found: {menu_name}"}), 404
 
-        # 開始時刻パース
+        # 開始時刻パース（タイムゾーン付き）
+        timezone = config["event"]["timezone"]
         try:
-            start_time = datetime.fromisoformat(start_str)
+            # naive datetime をパース
+            start_time_naive = datetime.fromisoformat(start_str)
+            # タイムゾーンを付与
+            tz = pytz.timezone(timezone)
+            start_time = tz.localize(start_time_naive)
         except ValueError:
             return jsonify({"error": "Invalid start time format"}), 400
 
@@ -364,7 +370,6 @@ def create_booking():
         # 二重予約チェック
         calendar_id = staff["calendar_id"]
         duration = menu["duration"]
-        timezone = config["event"]["timezone"]
 
         is_available = calendar_service.is_slot_available(
             calendar_id=calendar_id,
