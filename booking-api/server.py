@@ -59,6 +59,8 @@ def is_origin_allowed(origin):
 CORS(app, resources={
     r"/api/*": {
         "origins": "*",  # 一旦全て許可（後でリクエスト時にチェック）
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"],
         "supports_credentials": False
     }
 })
