@@ -34,9 +34,28 @@ app = Flask(__name__)
 with open("config.yaml", "r", encoding="utf-8") as f:
     config = yaml.safe_load(f)
 
-# CORS設定
-allowed_origins = config["cors"]["allowed_origins"]
-CORS(app, resources={r"/api/*": {"origins": allowed_origins}})
+# CORS設定（ワイルドカード対応）
+def get_cors_origin(request_origin):
+    """リクエストオリジンがCORS許可リストに含まれるかチェック"""
+    allowed_patterns = config["cors"]["allowed_origins"]
+
+    if not request_origin:
+        return None
+
+    for pattern in allowed_patterns:
+        if pattern == request_origin:
+            return request_origin
+        # ワイルドカードパターンマッチング
+        if "*" in pattern:
+            import re
+            regex_pattern = pattern.replace(".", r"\.").replace("*", r"[^/]+")
+            if re.match(f"^{regex_pattern}$", request_origin):
+                return request_origin
+
+    return None
+
+# CORS初期化（動的オリジン判定）
+CORS(app, resources={r"/api/*": {"origins": get_cors_origin, "supports_credentials": False}})
 
 # レート制限
 rate_limit_config = config["rate_limit"]
