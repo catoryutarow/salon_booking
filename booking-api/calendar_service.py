@@ -51,20 +51,24 @@ class CalendarService:
             busy枠のリスト [(開始時刻, 終了時刻), ...]
         """
         try:
-            # 時刻範囲を作成
-            time_min = datetime.combine(
+            # 時刻範囲を作成（タイムゾーン付き）
+            from datetime import timezone as tz_module
+            import pytz
+
+            tz = pytz.timezone(timezone)
+            time_min = tz.localize(datetime.combine(
                 date.date(),
                 datetime.strptime(start_time, "%H:%M").time()
-            )
-            time_max = datetime.combine(
+            ))
+            time_max = tz.localize(datetime.combine(
                 date.date(),
                 datetime.strptime(end_time, "%H:%M").time()
-            )
+            ))
 
             # freebusy.query 実行
             body = {
-                "timeMin": time_min.isoformat() + "Z",
-                "timeMax": time_max.isoformat() + "Z",
+                "timeMin": time_min.isoformat(),
+                "timeMax": time_max.isoformat(),
                 "timeZone": timezone,
                 "items": [{"id": calendar_id}]
             }
