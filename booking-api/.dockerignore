@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# 認証情報（絶対にイメージに含めない）
+credentials.json
+token.json
+refresh_token.txt
+*.json
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ドキュメント
+README.md
+QUICKSTART.md
+ARCHITECTURE.md
+
+# スクリプト
+setup_oauth.py
+deploy.sh
+
+# ログ
+*.log
+logs/

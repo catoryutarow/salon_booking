@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>よりみちSALON 美と癒しのマルシェ | 2026/2/20 - オンライン予約</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: #fafafa;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f5e6f0 0%, #e8f5f0 100%);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid #d4a5c8;
+        }
+
+        .hero h1 {
+            font-size: 1.75rem;
+            color: #6b4d5e;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .hero .catch {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .hero .event-info {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 0 auto;
+            max-width: 500px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .hero .event-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .hero .event-info strong {
+            color: #6b4d5e;
+        }
+
+        /* Section */
+        section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        section h2 {
+            font-size: 1.5rem;
+            color: #6b4d5e;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #d4a5c8;
+        }
+
+        /* Staff Cards */
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .staff-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border: 2px solid #f0e6ed;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .staff-card h3 {
+            font-size: 1.25rem;
+            color: #6b4d5e;
+            margin-bottom: 0.5rem;
+        }
+
+        .staff-card .service {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .staff-card .menu-list {
+            font-size: 0.9rem;
+            margin: 0.75rem 0;
+        }
+
+        .staff-card .menu-item {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+
+        .btn-book {
+            display: block;
+            width: 100%;
+            padding: 0.875rem;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #d4a5c8 0%, #a8c5d1 100%);
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .btn-book:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .modal h2 {
+            color: #6b4d5e;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #d4a5c8;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Time Slots */
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .time-slot {
+            padding: 0.75rem;
+            border: 2px solid #d4a5c8;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .time-slot.available:hover {
+            background: #d4a5c8;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .time-slot.selected {
+            background: #6b4d5e;
+            color: white;
+            border-color: #6b4d5e;
+        }
+
+        .time-slot.unavailable {
+            background: #f0f0f0;
+            color: #999;
+            border-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* Form */
+        .booking-form {
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #6b4d5e;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4a5c8;
+        }
+
+        .form-group .required {
+            color: #e74c3c;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #6b4d5e 0%, #d4a5c8 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #d4a5c8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Screen */
+        .success-screen {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-screen .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-screen h3 {
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+
+        .success-details {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .success-details p {
+            margin: 0.5rem 0;
+        }
+
+        /* Error */
+        .error-message {
+            background: #fee;
+            border: 2px solid #e74c3c;
+            color: #c0392b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #6b4d5e;
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .time-slots {
+                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>よりみちSALON<br>美と癒しのマルシェ</h1>
+        <p class="catch">マッサージ、ヘッドスパ、耳つぼジュエリー…<br>気になるエステをまとめて体験！</p>
+        <div class="event-info">
+            <p><strong>📅 日時</strong><br>2026年2月20日（金）<br>10:30 開場 〜 16:30 終了</p>
+            <p><strong>📍 場所</strong><br>北本市栄市民活動交流センター<br>埼玉県北本市栄1-1</p>
+        </div>
+    </div>
+
+    <!-- Booking Section -->
+    <section id="booking">
+        <h2>🎯 オンライン予約</h2>
+        <p style="margin-bottom: 1.5rem; color: #666;">施術者を選んで、ご希望の時間をご予約いただけます</p>
+
+        <div class="staff-grid" id="staffGrid">
+            <!-- JavaScript で動的生成 -->
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent">
+                <!-- JavaScript で動的生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p style="margin-top: 2rem; font-size: 0.85rem; opacity: 0.8;">
+            © 2026 よりみちSALON 美と癒しのマルシェ
+        </p>
+    </footer>
+
+    <script>
+        // ============================================
+        // 設定
+        // ============================================
+        const API_BASE_URL = 'http://localhost:8080'; // ← デプロイ後にCloud Run URLに変更
+
+        const STAFF_DATA = [
+            {
+                id: 'hirao_kazuko',
+                name: '平尾和子',
+                service: 'ドライヘッド',
+                menus: [
+                    { name: 'ドライヘッドスパ', duration: 10, price: 500, note: '延長10分ごと +500円（当日空き次第）' },
+                    { name: '脇ほぐし', duration: 5, price: 500 },
+                    { name: '足裏ふくらはぎ', duration: 15, price: 1500, note: 'ホットストーン付き' }
+                ]
+            },
+            {
+                id: 'hoshino_mika',
+                name: '星野美香',
+                service: 'ネイル',
+                menus: [
+                    { name: 'ハンドマッサージ', duration: 10, price: 500 },
+                    { name: 'グラデーションジェルネイル', duration: 30, price: 2000 }
+                ]
+            },
+            {
+                id: 'matsuoka_sachiyo',
+                name: '松岡佐智代',
+                service: '手相',
+                menus: [
+                    { name: '手相鑑定', duration: 15, price: 500 }
+                ]
+            },
+            {
+                id: 'miura_tomoko',
+                name: '三浦智子',
+                service: 'エステ',
+                menus: [
+                    { name: '血流促進電位治療器', duration: 30, price: 500 }
+                ]
+            },
+            {
+                id: 'hirao_kasumi',
+                name: '平尾夏純',
+                service: '耳つぼジュエリー',
+                menus: [
+                    { name: '耳つぼジュエリー', duration: 15, price: 500, note: '2個 500円、+2個ごと +500円（追加は当日空き次第）' }
+                ]
+            }
+        ];
+
+        // ============================================
+        // グローバル変数
+        // ============================================
+        let currentStaff = null;
+        let availableSlots = [];
+        let selectedSlot = null;
+        let selectedMenu = null;
+
+        // ============================================
+        // 初期化
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStaffCards();
+            setupModal();
+        });
+
+        // ============================================
+        // スタッフカード描画
+        // ============================================
+        function renderStaffCards() {
+            const grid = document.getElementById('staffGrid');
+            grid.innerHTML = '';
+
+            STAFF_DATA.forEach(staff => {
+                const card = document.createElement('div');
+                card.className = 'staff-card';
+                card.onclick = () => openBookingModal(staff);
+
+                const menusHTML = staff.menus.map(menu => `
+                    <div class="menu-item">
+                        <strong>${menu.name}</strong><br>
+                        ${menu.duration}分 ${menu.price}円
+                        ${menu.note ? `<br><small style="color: #888;">${menu.note}</small>` : ''}
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <h3>${staff.name}</h3>
+                    <p class="service">${staff.service}</p>
+                    <div class="menu-list">${menusHTML}</div>
+                    <button class="btn-book">予約する</button>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // ============================================
+        // モーダル設定
+        // ============================================
+        function setupModal() {
+            const modal = document.getElementById('bookingModal');
+            const closeBtn = modal.querySelector('.close');
+
+            closeBtn.onclick = () => {
+                modal.style.display = 'none';
+                resetBookingState();
+            };
+
+            window.onclick = (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    resetBookingState();
+                }
+            };
+        }
+
+        // ============================================
+        // 予約モーダルを開く
+        // ============================================
+        async function openBookingModal(staff) {
+            currentStaff = staff;
+            const modal = document.getElementById('bookingModal');
+            const content = document.getElementById('modalContent');
+
+            modal.style.display = 'block';
+            content.innerHTML = '<div class="loading"><div class="spinner"></div><p>空き状況を読み込み中...</p></div>';
+
+            try {
+                // 空き枠取得
+                const response = await fetch(`${API_BASE_URL}/api/availability?staff=${staff.id}&date=2026-02-20`);
+
+                if (!response.ok) {
+                    throw new Error('空き状況の取得に失敗しました');
+                }
+
+                const data = await response.json();
+                availableSlots = data.available_slots;
+
+                renderBookingForm(staff, data.available_slots);
+
+            } catch (error) {
+                console.error('Error fetching availability:', error);
+                content.innerHTML = `
+                    <div class="error-message">
+                        <strong>エラー</strong><br>
+                        空き状況の読み込みに失敗しました。<br>
+                        しばらくしてから再度お試しください。
+                    </div>
+                `;
+            }
+        }
+
+        // ============================================
+        // 予約フォーム描画
+        // ============================================
+        function renderBookingForm(staff, slots) {
+            const content = document.getElementById('modalContent');
+
+            const slotsHTML = slots.length > 0
+                ? slots.map(slot => `
+                    <div class="time-slot available" data-time="${slot}" onclick="selectTimeSlot('${slot}')">
+                        ${slot}
+                    </div>
+                `).join('')
+                : '<p style="text-align: center; color: #888;">申し訳ございません。本日の予約枠は満席です。</p>';
+
+            const menusOptions = staff.menus.map((menu, idx) => `
+                <option value="${idx}">${menu.name} (${menu.duration}分 ${menu.price}円)</option>
+            `).join('');
+
+            content.innerHTML = `
+                <h2>${staff.name}（${staff.service}）の予約</h2>
+
+                <div class="form-group">
+                    <label>メニュー <span class="required">*</span></label>
+                    <select id="menuSelect" onchange="handleMenuChange()"required>
+                        <option value="">選択してください</option>
+                        ${menusOptions}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>ご希望の時間 <span class="required">*</span></label>
+                    <div class="time-slots" id="timeSlots">
+                        ${slotsHTML}
+                    </div>
+                    <p id="selectedTimeDisplay" style="margin-top: 0.5rem; color: #6b4d5e; font-weight: 600;"></p>
+                </div>
+
+                <div class="booking-form">
+                    <div class="form-group">
+                        <label for="customerName">お名前 <span class="required">*</span></label>
+                        <input type="text" id="customerName" placeholder="山田太郎" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPhone">電話番号 <span class="required">*</span></label>
+                        <input type="tel" id="customerPhone" placeholder="090-1234-5678" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerEmail">メールアドレス（任意）</label>
+                        <input type="email" id="customerEmail" placeholder="example@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerNote">備考（任意）</label>
+                        <textarea id="customerNote" rows="3" placeholder="ご要望などございましたらご記入ください"></textarea>
+                    </div>
+
+                    <button class="btn-submit" onclick="submitBooking()" id="submitBtn" disabled>
+                        予約を確定する
+                    </button>
+                </div>
+            `;
+        }
+
+        // ============================================
+        // メニュー選択
+        // ============================================
+        function handleMenuChange() {
+            const select = document.getElementById('menuSelect');
+            const menuIndex = parseInt(select.value);
+
+            if (!isNaN(menuIndex)) {
+                selectedMenu = currentStaff.menus[menuIndex];
+                updateSubmitButton();
+            } else {
+                selectedMenu = null;
+                updateSubmitButton();
+            }
+        }
+
+        // ============================================
+        // 時間枠選択
+        // ============================================
+        function selectTimeSlot(time) {
+            // 既存の選択を解除
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+
+            // 新しい選択を適用
+            const slotElement = document.querySelector(`[data-time="${time}"]`);
+            slotElement.classList.add('selected');
+
+            selectedSlot = time;
+
+            // 表示更新
+            document.getElementById('selectedTimeDisplay').textContent = `選択中: ${time}`;
+
+            updateSubmitButton();
+        }
+
+        // ============================================
+        // 送信ボタン有効化チェック
+        // ============================================
+        function updateSubmitButton() {
+            const submitBtn = document.getElementById('submitBtn');
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+
+            const isValid = selectedMenu && selectedSlot && name && phone;
+            submitBtn.disabled = !isValid;
+        }
+
+        // リアルタイムバリデーション
+        document.addEventListener('input', (e) => {
+            if (e.target.id === 'customerName' || e.target.id === 'customerPhone') {
+                updateSubmitButton();
+            }
+        });
+
+        // ============================================
+        // 予約送信
+        // ============================================
+        async function submitBooking() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '予約処理中...';
+
+            const bookingData = {
+                staff: currentStaff.id,
+                start: `2026-02-20T${selectedSlot}:00`,
+                menu: selectedMenu.name,
+                name: document.getElementById('customerName').value.trim(),
+                phone: document.getElementById('customerPhone').value.trim(),
+                email: document.getElementById('customerEmail').value.trim() || null,
+                note: document.getElementById('customerNote').value.trim() || null
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/book`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showSuccessScreen(data.booking);
+                } else {
+                    throw new Error(data.error || '予約に失敗しました');
+                }
+
+            } catch (error) {
+                console.error('Booking error:', error);
+                showErrorScreen(error.message);
+            }
+        }
+
+        // ============================================
+        // 成功画面
+        // ============================================
+        function showSuccessScreen(booking) {
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <div class="success-screen">
+                    <div class="icon">✅</div>
+                    <h3>予約が完了しました！</h3>
+                    <p>ご予約ありがとうございます</p>
+
+                    <div class="success-details">
+                        <p><strong>📅 日時</strong><br>${booking.date} ${booking.time}</p>
+                        <p><strong>👤 施術者</strong><br>${booking.staff}（${booking.service}）</p>
+                        <p><strong>💆 メニュー</strong><br>${booking.menu}（${booking.duration}分）</p>
+                        <p><strong>📍 会場</strong><br>${booking.location}</p>
+                    </div>
+
+                    <div style="background: #fff9e6; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+                        <strong>⚠️ ご注意</strong><br>
+                        ・遅刻した場合、施術時間が短くなる可能性があります<br>
+                        ・延長や追加メニューは当日の空き状況次第でご案内します<br>
+                        ・キャンセルはお早めにご連絡ください
+                    </div>
+
+                    <button class="btn-submit" onclick="closeModal()" style="margin-top: 1.5rem;">
+                        閉じる
+                    </button>
+                </div>
+            `;
+        }
+
+        // ============================================
+        // エラー画面
+        // ============================================
+        function showErrorScreen(message) {
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <div class="error-message">
+                    <strong>❌ 予約エラー</strong><br>
+                    ${message}
+                </div>
+                <button class="btn-submit" onclick="location.reload()" style="margin-top: 1.5rem;">
+                    ページを再読み込み
+                </button>
+            `;
+        }
+
+        // ============================================
+        // ユーティリティ
+        // ============================================
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            resetBookingState();
+            location.reload(); // 最新の空き状況を反映
+        }
+
+        function resetBookingState() {
+            currentStaff = null;
+            availableSlots = [];
+            selectedSlot = null;
+            selectedMenu = null;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+# 認証情報（絶対にコミットしない）
+credentials.json
+token.json
+refresh_token.txt
+*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ログ
+*.log
+logs/
+
+# テスト
+.pytest_cache/
+.coverage
+htmlcov/

@@ -1,0 +1,118 @@
+# 予約システム設定ファイル
+
+# イベント情報
+event:
+  name: "よりみちSALON 美と癒しのマルシェ"
+  date: "2026-02-20"
+  start_time: "10:30"
+  end_time: "16:30"
+  timezone: "Asia/Tokyo"
+  location: "北本市栄市民活動交流センター（埼玉県北本市栄1-1）"
+
+# 施術者とカレンダーID
+staff:
+  - id: "hirao_kazuko"
+    name: "平尾和子"
+    service: "ドライヘッド"
+    calendar_id: "8d9b024cb4b4765d85ae25401f2bfefca738d00505cadfa27b161b1f22e52156@group.calendar.google.com"
+    menus:
+      - name: "ドライヘッドスパ"
+        duration: 10
+        price: 500
+        note: "延長10分ごと +500円（当日空き次第）"
+      - name: "脇ほぐし"
+        duration: 5
+        price: 500
+      - name: "足裏ふくらはぎ"
+        duration: 15
+        price: 1500
+        note: "ホットストーン付き"
+
+  - id: "hoshino_mika"
+    name: "星野美香"
+    service: "ネイル"
+    calendar_id: "2192c0edd964e0b539c6ea300a5214eeb85d5fc9bb4bf40d6f13160523cdff30@group.calendar.google.com"
+    menus:
+      - name: "ハンドマッサージ"
+        duration: 10
+        price: 500
+      - name: "グラデーションジェルネイル"
+        duration: 30
+        price: 2000
+
+  - id: "matsuoka_sachiyo"
+    name: "松岡佐智代"
+    service: "手相"
+    calendar_id: "39bf6d15f66c7c471d7be70ec071c46bbebaa7a7aba0ded77adc44b3fd031794@group.calendar.google.com"
+    menus:
+      - name: "手相鑑定"
+        duration: 15
+        price: 500
+
+  - id: "miura_tomoko"
+    name: "三浦智子"
+    service: "エステ"
+    calendar_id: "7a5f8829e17bb7a6678e6b3ea944680d7bdda82903310aaaa2d1593c4d51dd4f@group.calendar.google.com"
+    menus:
+      - name: "血流促進電位治療器"
+        duration: 30
+        price: 500
+
+  - id: "hirao_kasumi"
+    name: "平尾夏純"
+    service: "耳つぼジュエリー"
+    calendar_id: "1d5175aac3e16cec18401e3ff84b7b842e6044bf870cf355e275d3a279294f4f@group.calendar.google.com"
+    menus:
+      - name: "耳つぼジュエリー"
+        duration: 15
+        price: 500
+        note: "2個 500円、+2個ごと +500円（追加は当日空き次第）"
+
+# 予約設定
+booking:
+  slot_duration: 15  # 予約枠の単位（分）
+  buffer_time: 5     # 枠ごとの余白時間（分）※既に枠に含まれる想定
+  max_advance_days: 30  # 何日先まで予約可能か
+
+# 回復枠（予約不可時間帯）
+recovery_slots:
+  - time: "12:00"
+    duration: 15
+  - time: "14:00"
+    duration: 15
+
+# CORS設定
+cors:
+  allowed_origins:
+    - "https://salon-booking-vert.vercel.app"
+    - "http://localhost:8000"
+    - "http://127.0.0.1:8000"
+
+# レート制限
+rate_limit:
+  enabled: true
+  max_requests_per_minute: 10
+  max_requests_per_hour: 60
+
+# ログ設定
+logging:
+  level: "INFO"
+  mask_phone: true
+  mask_email: true
+
+# Google Calendar API
+google_calendar:
+  api_version: "v3"
+  scopes:
+    - "https://www.googleapis.com/auth/calendar"
+
+# Secret Manager（本番環境）
+secrets:
+  refresh_token_name: "calendar-oauth-refresh-token"
+  client_secret_name: "calendar-oauth-client-secret"
+
+# 開発環境設定
+development:
+  use_local_credentials: true  # ローカル開発時はTrue
+  credentials_file: "credentials.json"
+  token_file: "token.json"
