@@ -70,8 +70,16 @@ CORS(app, resources={
 def check_cors_origin(response):
     """CORSヘッダーを動的に設定"""
     origin = request.headers.get('Origin')
+
+    # オリジンが許可リストに含まれる場合のみ、明示的に設定
     if origin and is_origin_allowed(origin):
         response.headers['Access-Control-Allow-Origin'] = origin
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    elif origin:
+        # 許可されていないオリジンの場合はログ出力
+        logger.warning(f"CORS blocked origin: {origin}")
+
     return response
 
 # レート制限
