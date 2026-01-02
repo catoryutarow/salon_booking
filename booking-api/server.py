@@ -494,9 +494,13 @@ def internal_error(error):
     return jsonify({"error": "Internal server error"}), 500
 
 
+# CalendarService を初期化（モジュールロード時に実行）
+# gunicorn で起動する場合もこれが実行される
+init_calendar_service()
+
+
 if __name__ == "__main__":
-    # CalendarService 初期化
-    init_calendar_service()
+    # 直接実行の場合は既に初期化済み
 
     # サーバー起動
     port = int(os.environ.get("PORT", 8080))

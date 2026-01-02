@@ -86,6 +86,7 @@ cors:
   allowed_origins:
     - "https://salon-booking-vert.vercel.app"
     - "https://*.vercel.app"  # Vercel preview deployments
+    - "https://booking-api-701596593228.asia-northeast1.run.app"  # Cloud Run
     - "http://localhost:8000"
     - "http://127.0.0.1:8000"
     - "http://localhost:8080"
@@ -116,6 +117,6 @@ secrets:
 
 # 開発環境設定
 development:
-  use_local_credentials: true  # ローカル開発時はTrue
+  use_local_credentials: false  # ローカル開発時はTrue、Cloud Runでは False
   credentials_file: "credentials.json"
   token_file: "token.json"
